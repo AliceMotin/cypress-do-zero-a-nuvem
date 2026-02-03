@@ -1,6 +1,55 @@
 describe("Central de Atendimento ao Cliente TAT", () => {
-  it("verifica o título da aplicação", () => {
+  beforeEach(() => {
     cy.visit("./src/index.html");
+  });
+  it("verifica o título da aplicação", () => {
     cy.title().should("eq", "Central de Atendimento ao Cliente TAT");
+  });
+  it("exercício - preenche os campos obrigatórios e envia o formulário", () => {
+    cy.get('input[name="firstName"]').type("Alice");
+    cy.get('input[name="lastName"]').type("Motin");
+    cy.get('input[id="email"]').type("alice@gmail.com");
+    cy.get('textarea[name="open-text-area"]').type("Curso muito bom, gostei!");
+    cy.get('button[type="submit"]').click();
+    cy.get('span[class="success"]').should(
+      "be.visible",
+      "Mensagem enviada com sucesso."
+    );
+  });
+  it.only("exercício extra 1 - delay 0", () => {
+    const longText = Cypress._.repeat("alice ", 15);
+    cy.get('input[name="firstName"]').type("Alice");
+    cy.get('input[name="lastName"]').type("Motin");
+    cy.get('input[id="email"]').type("alice@gmail.com");
+    cy.get('textarea[name="open-text-area"]').type(longText, { delay: 0 });
+    cy.get('button[class="button"]').click();
+    cy.get('span[class="success"]').should(
+      "be.visible",
+      "Mensagem enviada com sucesso."
+    );
+  });
+  it("exercício extra 2 - exibe mensagem de erro ao submeter o formulário com um email com formatação inválida", () => {
+    cy.get('input[name="firstName"]').type("Alice");
+    cy.get('input[name="lastName"]').type("Motin");
+    cy.get('input[id="email"]').type("alicegmail.com");
+    cy.get('textarea[name="open-text-area"]').type("Curso muito bom, gostei!");
+    cy.get('button[class="button"]').click();
+    cy.get('span[class="error"]').should(
+      "be.visible",
+      "Valide os campos obrigatórios!"
+    );
+  });
+  it("exercício extra 3", () => {
+    cy.get('input[name="firstName"]').type("Alice");
+    cy.get('input[name="lastName"]').type("Motin");
+    cy.get('input[id="email"]').type("alice@gmail.com");
+    cy.get('input[id="phone"]').type("alice@gmail.com");
+    cy.get('input[id="phone"]').should("have.value", "");
+    cy.get('textarea[name="open-text-area"]').type("Curso muito bom, gostei!");
+    cy.get('button[class="button"]').click();
+    cy.get('span[class="success"]').should(
+      "be.visible",
+      "Mensagem enviada com sucesso."
+    );
   });
 });
