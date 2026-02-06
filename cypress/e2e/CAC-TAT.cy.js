@@ -16,7 +16,7 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       "Mensagem enviada com sucesso."
     );
   });
-  it.only("exercício extra 1 - delay 0", () => {
+  it("exercício extra 1 - delay 0", () => {
     const longText = Cypress._.repeat("alice ", 15);
     cy.get('input[name="firstName"]').type("Alice");
     cy.get('input[name="lastName"]').type("Motin");
@@ -39,17 +39,19 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       "Valide os campos obrigatórios!"
     );
   });
-  it("exercício extra 3", () => {
+  it("exercício extra 3 - campo continua vazio quando preenchido com um valor não-numérico", () => {
+    cy.get('input[id="phone"]')
+      .type("alice@gmail.com")
+      .should("have.value", "");
+  });
+
+  it.only("exercício extra 4 - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
     cy.get('input[name="firstName"]').type("Alice");
     cy.get('input[name="lastName"]').type("Motin");
     cy.get('input[id="email"]').type("alice@gmail.com");
-    cy.get('input[id="phone"]').type("alice@gmail.com");
-    cy.get('input[id="phone"]').should("have.value", "");
+    cy.get("#phone-checkbox").click();
     cy.get('textarea[name="open-text-area"]').type("Curso muito bom, gostei!");
-    cy.get('button[class="button"]').click();
-    cy.get('span[class="success"]').should(
-      "be.visible",
-      "Mensagem enviada com sucesso."
-    );
+    cy.get('button[type="submit"]').click();
+    cy.get('span[class="error"]').should("be.visible");
   });
 });
