@@ -45,12 +45,40 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       .should("have.value", "");
   });
 
-  it.only("exercício extra 4 - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
+  it("exercício extra 4 - exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário", () => {
     cy.get('input[name="firstName"]').type("Alice");
     cy.get('input[name="lastName"]').type("Motin");
     cy.get('input[id="email"]').type("alice@gmail.com");
     cy.get("#phone-checkbox").click();
     cy.get('textarea[name="open-text-area"]').type("Curso muito bom, gostei!");
+    cy.get('button[type="submit"]').click();
+    cy.get('span[class="error"]').should("be.visible");
+  });
+
+  it("exercício extra 5 - preenche e limpa os campos nome, sobrenome, email e telefone", () => {
+    cy.get('input[name="firstName"]')
+      .type("Alice")
+      .should("have.value", "Alice")
+      .clear()
+      .should("have.value", "");
+    cy.get('input[name="lastName"]')
+      .type("Motin")
+      .should("have.value", "Motin")
+      .clear()
+      .should("have.value", "");
+    cy.get('input[id="email"]')
+      .type("alice@gmail.com")
+      .should("have.value", "alice@gmail.com")
+      .clear()
+      .should("have.value", "");
+    cy.get('input[id="phone"]')
+      .type("999")
+      .should("have.value", "999")
+      .clear()
+      .should("have.value", "");
+  });
+
+  it.only("exercício extra 6 - exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
     cy.get('button[type="submit"]').click();
     cy.get('span[class="error"]').should("be.visible");
   });
