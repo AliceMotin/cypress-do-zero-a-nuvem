@@ -84,6 +84,12 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   });
 
   it.only("exercício extra 7 - envia o formuário com sucesso usando um comando customizado", () => {
+    const data = {
+      firstName: "Alice",
+      lastName: "Motin",
+      email: "alice@gmail.com",
+      text: "Curso muito bom, gostei!",
+    };
     cy.fillMandatoryFieldsAndSubmit();
     cy.get('span[class="success"]').should("be.visible");
   });
