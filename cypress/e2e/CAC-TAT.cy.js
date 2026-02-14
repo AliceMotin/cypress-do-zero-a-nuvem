@@ -78,8 +78,13 @@ describe("Central de Atendimento ao Cliente TAT", () => {
       .should("have.value", "");
   });
 
-  it.only("exercício extra 6 - exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
+  it("exercício extra 6 - exibe mensagem de erro ao submeter o formulário sem preencher os campos obrigatórios", () => {
     cy.get('button[type="submit"]').click();
     cy.get('span[class="error"]').should("be.visible");
+  });
+
+  it.only("exercício extra 7 - envia o formuário com sucesso usando um comando customizado", () => {
+    cy.fillMandatoryFieldsAndSubmit();
+    cy.get('span[class="success"]').should("be.visible");
   });
 });
