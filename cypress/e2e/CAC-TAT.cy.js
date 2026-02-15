@@ -83,8 +83,13 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.get('span[class="error"]').should("be.visible");
   });
 
-  it.only("exercício extra 7 - envia o formuário com sucesso usando um comando customizado", () => {
+  it("exercício extra 7 - envia o formuário com sucesso usando um comando customizado", () => {
     cy.fillMandatoryFieldsAndSubmit();
     cy.get('span[class="success"]').should("be.visible");
+  });
+
+  it.only("exercício extra 8 - cy.contains()", () => {
+    cy.get('button[type="submit"]').click();
+    cy.get('span[class="error"]').should("be.visible");
   });
 });
