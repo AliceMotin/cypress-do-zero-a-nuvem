@@ -5,6 +5,9 @@ describe("Central de Atendimento ao Cliente TAT", () => {
   it("verifica o título da aplicação", () => {
     cy.title().should("eq", "Central de Atendimento ao Cliente TAT");
   });
+
+  ///////////////// lesson 2 /////////////////
+
   it("exercício - preenche os campos obrigatórios e envia o formulário", () => {
     cy.get('input[name="firstName"]').type("Alice");
     cy.get('input[name="lastName"]').type("Motin");
@@ -88,8 +91,24 @@ describe("Central de Atendimento ao Cliente TAT", () => {
     cy.get('span[class="success"]').should("be.visible");
   });
 
-  it.only("exercício extra 8 - cy.contains()", () => {
-    cy.get('button[type="submit"]').click();
+  it("exercício extra 8 - utilizar cy.contains() no botão", () => {
+    cy.contains("button", "Enviar").click();
     cy.get('span[class="error"]').should("be.visible");
+  });
+
+  ///////////////// lesson 3 /////////////////
+
+  it("exercício - seleciona um produto (YouTube) por seu texto", () => {
+    cy.get('select[id="product"]')
+      .select("YouTube")
+      .should("have.value", "youtube");
+  });
+  it("exercício - seleciona um produto (Mentoria) por seu valor (value)", () => {
+    cy.get('select[id="product"]')
+      .select("mentoria")
+      .should("have.value", "mentoria");
+  });
+  it.only("exercício - seleciona um produto (Blog) por seu índice", () => {
+    cy.get('select[id="product"]').select(1).should("have.value", "blog");
   });
 });
